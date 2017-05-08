@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/paviro/MMM-Wunderlist"
+    "url": "git+https://github.com/funsocietyirc/MMM-Wunderlist-Enhanced.git"
   },
   "keywords": [
     "magic mirror",
@@ -16,7 +16,7 @@
   "contributors": [ "Paul-Vincent Roll", "https://github.com/paviro/MMM-Wunderlist/graphs/contributors" ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/paviro/MMM-Wunderlist/issues"
+    "url": "https://github.com/funsocietyirc/MMM-Wunderlist-Enhanced/issues"
   },
   "homepage": "https://github.com/paviro/MMM-Wunderlist#readme",
   "dependencies": {
