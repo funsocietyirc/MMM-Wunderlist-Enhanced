@@ -28,7 +28,6 @@ module.exports = NodeHelper.create({
 
   getUsers: function(callback) {
     this.WunderlistAPI.http.users.all().done(function(users) {
-      console.dir(users);
       var ret = {};
       users.forEach(function(user) {
         ret[user.id] = user.name[0]
@@ -103,12 +102,6 @@ module.exports = NodeHelper.create({
           self.getLists(function(data) {
             self.lists = data;
             self.sendSocketNotification("STARTED");
-          });
-
-          // Get Initial users
-          self.getUsers(function(data) {
-            console.dir(data);
-            self.sendSocketNotification("USERS", data)
           });
 
           self.started = true;
