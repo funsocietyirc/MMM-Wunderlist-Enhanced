@@ -1,0 +1,25 @@
+{
+  "name": "Magic-Mirror-Module-Wunderlist-Enhanced",
+  "description": "Wunderlist-Enhanced module for the Magic Mirror.",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paviro/MMM-Wunderlist"
+  },
+  "keywords": [
+    "magic mirror",
+    "smart mirror",
+    "wunderlist",
+    "module"
+  ],
+  "author": "Dave Richer",
+  "contributors": [ "Paul-Vincent Roll", "https://github.com/paviro/MMM-Wunderlist/graphs/contributors" ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paviro/MMM-Wunderlist/issues"
+  },
+  "homepage": "https://github.com/paviro/MMM-Wunderlist#readme",
+  "dependencies": {
+    "wunderlist": "latest"
+  }
+}
