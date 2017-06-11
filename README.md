@@ -18,6 +18,9 @@ modules: [
 		header: 'Wunderlist', // This is optional
 		config: {
 			// See 'Configuration options' for more information.
+                        accessToken: "5f6f8b5972470536222ac5f0ab03230bbbcc5279f2aaa3c90f66db780bb1",  //example token
+                        clientID: "da50f5c13e5c25f87c51",   //example clientID
+                        lists: ["inbox","House to do"]			
 		}
 	}
 ]
@@ -39,14 +42,14 @@ The following properties can be configured:
 	<tbody>
 		<tr>
 			<td><code>accessToken</code></td>
-			<td>Your Wunderlist access token, you can get it <a href="https://developer.wunderlist.com/apps/new">here</a>.<br>
+			<td>REQUIRED: Your Wunderlist access token, you can get it <a href="https://developer.wunderlist.com/apps/new">here</a>.  Put any url in APP URL and Callback URL.<br>
 				<br><b>Possible values:</b> <code>string</code>
 				<br><b>Default value:</b> <code>none</code>
 			</td>
 		</tr>
 		<tr>
 			<td><code>clientID</code></td>
-			<td>Your Wunderlist client id, you can get it <a href="https://developer.wunderlist.com/apps/new">here</a>.<br>
+			<td>REQUIRED: Your Wunderlist client id, you can get it <a href="https://developer.wunderlist.com/apps/new">here</a>.   Put any url in APP URL and Callback URL.<br>
 				<br><b>Possible values:</b> <code>string</code>
 				<br><b>Default value:</b> <code>none</code>
 			</td>
