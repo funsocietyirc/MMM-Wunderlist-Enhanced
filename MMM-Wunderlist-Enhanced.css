@@ -1,5 +1,9 @@
-.wunderlist * td {
+.wunderlist.spaced * td {
   padding-bottom: 10px;
+}
+
+.wunderlist tr + tr th {
+  padding-top: 15px;
 }
 
 .assignee {

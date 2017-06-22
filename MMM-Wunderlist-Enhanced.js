@@ -18,7 +18,11 @@ Module.register("MMM-Wunderlist-Enhanced", {
     fade: true,
     fadePoint: 0.25,
     showDeadline: true,
-    showAssignee: true
+    showAssignee: true,
+    showBullets: true,
+    // left, right, inline_left, inline_right, none
+    iconPosition: "left",
+    compact: false
   },
 
   // Override socket notification handler.
@@ -77,11 +81,71 @@ Module.register("MMM-Wunderlist-Enhanced", {
 
   html: {
     table: '<tbody>{0}</tbody>',
-    titleRow: '<tr><th colspan="4"><header class="module-header"><i class="fa fa-list-ul fa-fw"></i> {0}</header></th></tr>',
-    row: '<tr><td>{0}</td><td class="title bright">{1}</td><td>{2}</td><td>{3}</td></tr>',
+    titleRow: '<tr><th colspan="{0}"><header class="module-header"><i class="fa fa-list-ul fa-fw"></i> {1}</header></th></tr>',
+    row: '<tr class="{0}">{1}</tr>',
+    tdAssignee: '<td class="light">{0}</td>',
+    tdDeadline: '<td class="light">{0}</td>',
+    tdBullet: '<td>{0}</td>',
+    tdContent: '<td class="title {0}">{1}</td>',
     star: '<i class="fa fa-star fa-fw" aria-hidden="true"></i>',
-    bullet: '<i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>',
+    bullet_left: '<i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>',
+    bullet_right: '<i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i>',
+    bullet_none: '<i class="fa-fw" aria-hidden="true"></i>',
     assignee: '<div class="assignee">{0}</div>'
+  },
+
+  getTitleRow: function(title) {
+    var columncount = 1;
+    if (this.config.showAssignee) columncount += 1;
+    if (this.config.showDeadline) columncount += 1;
+    if (this.config.iconPosition != "inline") columncount += 1;
+    return this.html.titleRow.format(columncount, title);
+  },
+
+  getBullet: function(starred) {
+    if (starred)
+      return this.html.star;
+
+    if (!this.config.showBullets) 
+      return this.html.bullet_none;
+
+    if (this.config.iconPosition == "right" || this.config.iconPosition == "inline_right")
+      return this.html.bullet_right;
+
+    return this.html.bullet_left;
+  },
+
+  getRow: function(todo) {
+    var self = this;
+    var useTitle = todo.title;
+    if (self.config.iconPosition == "inline_left") {
+      useTitle = self.getBullet(todo.starred) + useTitle;
+    } else if (self.config.iconPosition == "inline_right") {
+      useTitle += self.getBullet(todo.starred);
+    }
+    var tds = self.html.tdContent.format(todo.starred ? 'bright' : 'normal', useTitle);
+
+    if (self.config.showAssignee) {
+      tds += self.html.tdAssignee.format(todo.assignee_id && self.users
+        ? self.html.assignee.format(self.users[todo.assignee_id])
+        : '');
+    }
+
+    if (self.config.showDeadline) {
+      tds += self.html.tdDeadline.format(todo.due_date
+        ? todo.due_date
+        : '');
+    }
+    
+    if (self.config.iconPosition == "right" || self.config.iconPosition == "left") {
+      var bulletTd = self.html.tdBullet.format(self.getBullet(todo.starred));
+      if (self.config.iconPosition == "left") {
+        tds = bulletTd + tds;
+      } else {
+        tds = tds + bulletTd; 
+      }
+    }
+    return self.html.row.format("", tds);
   },
 
   getDom: function() {
@@ -90,7 +154,10 @@ Module.register("MMM-Wunderlist-Enhanced", {
     }
     var self = this;
     var wrapper = document.createElement("table");
-    wrapper.className = "normal small light wunderlist";
+    wrapper.className = "normal small wunderlist";
+    if (!self.config.compact) {
+      wrapper.className += " spaced";
+    }
 
     var todos = this.getTodos();
 
@@ -108,13 +175,7 @@ Module.register("MMM-Wunderlist-Enhanced", {
       if (!rows[titleRowValue])
         rows[titleRowValue] = [];
 
-      rows[titleRowValue].push(self.html.row.format(todo.starred
-        ? self.html.star
-        : self.html.bullet, todo.title, self.config.showAssignee && todo.assignee_id && self.users
-        ? self.html.assignee.format(self.users[todo.assignee_id])
-        : '', self.config.showDeadline && todo.due_date
-        ? todo.due_date
-        : ''));
+      rows[titleRowValue].push(self.getRow(todo));
 
       // Create fade effect
       if (self.config.fade && self.config.fadePoint < 1) {
@@ -131,7 +192,7 @@ Module.register("MMM-Wunderlist-Enhanced", {
     const generateRows = () => {
       var results = [];
       titleRows.forEach((key, value) => {
-        results.push(self.html.titleRow.format(key));
+        results.push(self.getTitleRow(key));
         let count = 0;
         rows[value].forEach((rowValue, rowKey) => {
           if (count < this.config.maximumEntries)
