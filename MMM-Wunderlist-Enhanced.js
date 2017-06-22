@@ -19,10 +19,10 @@ Module.register("MMM-Wunderlist-Enhanced", {
     fadePoint: 0.25,
     showDeadline: true,
     showAssignee: true,
-    showBullets: true,
-    // left, right, inline_left, inline_right, none
+    showBullets: false,
+    // lpght, inline_left, inline_right, none
     iconPosition: "left",
-    compact: false
+    spaced: false
   },
 
   // Override socket notification handler.
@@ -125,6 +125,15 @@ Module.register("MMM-Wunderlist-Enhanced", {
     }
     var tds = self.html.tdContent.format(todo.starred ? 'bright' : 'normal', useTitle);
 
+    if (self.config.iconPosition == "right" || self.config.iconPosition == "left") {
+      var bulletTd = self.html.tdBullet.format(self.getBullet(todo.starred));
+      if (self.config.iconPosition == "left") {
+        tds = bulletTd + tds;
+      } else {
+        tds = tds + bulletTd; 
+      }
+    }
+
     if (self.config.showAssignee) {
       tds += self.html.tdAssignee.format(todo.assignee_id && self.users
         ? self.html.assignee.format(self.users[todo.assignee_id])
@@ -137,14 +146,6 @@ Module.register("MMM-Wunderlist-Enhanced", {
         : '');
     }
     
-    if (self.config.iconPosition == "right" || self.config.iconPosition == "left") {
-      var bulletTd = self.html.tdBullet.format(self.getBullet(todo.starred));
-      if (self.config.iconPosition == "left") {
-        tds = bulletTd + tds;
-      } else {
-        tds = tds + bulletTd; 
-      }
-    }
     return self.html.row.format("", tds);
   },
 
@@ -155,7 +156,7 @@ Module.register("MMM-Wunderlist-Enhanced", {
     var self = this;
     var wrapper = document.createElement("table");
     wrapper.className = "normal small wunderlist";
-    if (!self.config.compact) {
+    if (self.config.spaced) {
       wrapper.className += " spaced";
     }
 

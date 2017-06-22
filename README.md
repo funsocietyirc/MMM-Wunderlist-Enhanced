@@ -100,6 +100,13 @@ The following properties can be configured:
 			</td>
 		</tr>
 		<tr>
+			<td><code>spaced</code></td>
+			<td>Add more space between table rows<br>
+				<br><b>Possible values:</b> <code>true</code> or <code>false</code>
+				<br><b>Default value:</b> <code>false</code>
+			</td>
+		</tr>
+		<tr>
 			<td><code>showDeadline</code></td>
 			<td>Show deadline of a task<br>
 				<br><b>Possible values:</b> <code>true</code> or <code>false</code>
@@ -111,6 +118,27 @@ The following properties can be configured:
 			<td>Show due date of a task<br>
 				<br><b>Possible values:</b> <code>true</code> or <code>false</code>
 				<br><b>Default value:</b> <code>true</code>
+			</td>
+		</tr>
+		<tr>
+			<td><code>iconPosition</code></td>
+			<td>Where to position the star-icon and the (optional) bullet-icons<br>
+				<br><b>Possible values:</b> 
+                <ul>
+                    <li><code>left</code> In a table column left of the title</li>
+                    <li><code>right</code> In a table column right of the title</li>
+                    <li><code>inline_left</code> Left of the title, in the same table cell</li>
+                    <li><code>inline_right</code> Right of the title, in the same table cell</li>
+                    <li><code>none</code> Show no icons (no bullets/no stars)</li>
+                </ul>
+				<br><b>Default value:</b> <code>true</code>
+			</td>
+		</tr>
+		<tr>
+			<td><code>showBullets</code></td>
+			<td>Show bullets, "&gt;" before the title if icons are aligned left, or "&lt;" after the title if icons are aligned right. Note, that stars are still shown for starred items if showBullets is set to off. <br>
+				<br><b>Possible values:</b> <code>true</code> or <code>false</code>
+				<br><b>Default value:</b> <code>false</code>
 			</td>
 		</tr>
 	</tbody>
