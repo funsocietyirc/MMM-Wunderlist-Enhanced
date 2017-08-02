@@ -20,7 +20,7 @@ Module.register("MMM-Wunderlist-Enhanced", {
     showDeadline: true,
     showAssignee: true,
     showBullets: false,
-    // lpght, inline_left, inline_right, none
+    // left, right, inline_left, inline_right, none
     iconPosition: "left",
     spaced: false
   },
