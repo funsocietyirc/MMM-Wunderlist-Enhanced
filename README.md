@@ -74,7 +74,7 @@ The following properties can be configured:
 		<tr>
 			<td><code>maximumEntries</code></td>
 			<td>Maximum number of todos to be shown per list.<br>
-				<br><b>Possible values:</b> <code>time</code> in <code>min</code>
+				<br><b>Possible values:</b> <code>int</code> 
 				<br><b>Default value:</b> <code>60</code>
 			</td>
 		</tr>
