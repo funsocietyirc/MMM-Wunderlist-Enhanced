@@ -10,6 +10,7 @@
 const NodeHelper = require("node_helper");
 const Fetcher = require("./fetcher.js");
 var WunderlistSDK = require('wunderlist');
+var moment = require('moment');
 
 module.exports = NodeHelper.create({
   start: function() {

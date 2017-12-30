@@ -17,6 +17,8 @@ Module.register("MMM-Wunderlist-Enhanced", {
     interval: 60,
     fade: true,
     fadePoint: 0.25,
+    allBrightTitles: false,
+    relativeDates: true,
     showDeadline: true,
     showAssignee: true,
     showBullets: false,
@@ -123,7 +125,7 @@ Module.register("MMM-Wunderlist-Enhanced", {
     } else if (self.config.iconPosition == "inline_right") {
       useTitle += self.getBullet(todo.starred);
     }
-    var tds = self.html.tdContent.format(todo.starred ? 'bright' : 'normal', useTitle);
+    var tds = self.html.tdContent.format(todo.starred || self.config.allBrightTitles ? 'bright' : 'normal', useTitle);
 
     if (self.config.iconPosition == "right" || self.config.iconPosition == "left") {
       var bulletTd = self.html.tdBullet.format(self.getBullet(todo.starred));
@@ -141,12 +143,38 @@ Module.register("MMM-Wunderlist-Enhanced", {
     }
 
     if (self.config.showDeadline) {
-      tds += self.html.tdDeadline.format(todo.due_date
-        ? todo.due_date
-        : '');
+      if (self.config.relativeDates) {
+        var now = moment();
+        var todoDate = moment(todo.due_date);
+        var relativeDate = '';
+
+        if (todoDate.isSame(now, 'day')) {
+          relativeDate = this.capFirst(this.translate("TODAY"));
+        } else if (todoDate.isSame(moment().add(1, 'days'), 'day')) {
+          relativeDate = this.capFirst(this.translate("TOMORROW"));
+        } else if (todoDate.isSame(moment().add(2, 'days'), 'day')) {
+          if (this.translate("DAYAFTERTOMORROW") !== "DAYAFTERTOMORROW") {
+            relativeDate = this.capFirst(this.translate("DAYAFTERTOMORROW"));
+          } else {
+            relativeDate = this.capFirst(moment(todoDate, "x").fromNow());
+          }
+        } else {
+          relativeDate = this.capFirst(moment(todoDate, "x").fromNow());
+        }
+
+        tds += self.html.tdDeadline.format(relativeDate);
+      } else {
+        tds += self.html.tdDeadline.format(todo.due_date
+          ? todo.due_date
+          : '');
+      }
     }
     
     return self.html.row.format("", tds);
+  },
+
+  capFirst: function (string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   },
 
   getDom: function() {
