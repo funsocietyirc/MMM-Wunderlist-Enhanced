@@ -143,7 +143,7 @@ Module.register("MMM-Wunderlist-Enhanced", {
     }
 
     if (self.config.showDeadline) {
-      if (self.config.relativeDates) {
+      if (self.config.relativeDates && todo.due_date) {
         var now = moment();
         var todoDate = moment(todo.due_date);
         var relativeDate = '';
@@ -152,12 +152,6 @@ Module.register("MMM-Wunderlist-Enhanced", {
           relativeDate = this.capFirst(this.translate("TODAY"));
         } else if (todoDate.isSame(moment().add(1, 'days'), 'day')) {
           relativeDate = this.capFirst(this.translate("TOMORROW"));
-        } else if (todoDate.isSame(moment().add(2, 'days'), 'day')) {
-          if (this.translate("DAYAFTERTOMORROW") !== "DAYAFTERTOMORROW") {
-            relativeDate = this.capFirst(this.translate("DAYAFTERTOMORROW"));
-          } else {
-            relativeDate = this.capFirst(moment(todoDate, "x").fromNow());
-          }
         } else {
           relativeDate = this.capFirst(moment(todoDate, "x").fromNow());
         }
