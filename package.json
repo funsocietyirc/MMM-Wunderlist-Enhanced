@@ -13,7 +13,10 @@
     "module"
   ],
   "author": "Dave Richer",
-  "contributors": [ "Paul-Vincent Roll", "https://github.com/paviro/MMM-Wunderlist/graphs/contributors" ],
+  "contributors": [
+    "Paul-Vincent Roll",
+    "https://github.com/paviro/MMM-Wunderlist/graphs/contributors"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/funsocietyirc/MMM-Wunderlist-Enhanced/issues"
@@ -21,6 +24,12 @@
   "homepage": "https://github.com/paviro/MMM-Wunderlist#readme",
   "dependencies": {
     "moment": "latest",
-    "wunderlist": "latest"
-  }
+    "wunderlist": "latest",
+    "snyk": "^1.85.0"
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
